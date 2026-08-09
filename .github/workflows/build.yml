@@ -1,0 +1,34 @@
+name: Free Orbitly iOS Build
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node Env
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Generate Native iOS Project
+        run: npx expo prebuild --platform ios
+
+      - name: Compile Code to IPA
+        run: |
+          mkdir -p build/Payload
+          xcodebuild -workspace ios/orbitlyapp.xcworkspace -scheme orbitlyapp -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO clean build
+          mv ios/build/Build/Products/Release-iphoneos/orbitlyapp.app build/Payload/
+          cd build
+          zip -r Orbitly.ipa Payload
+
+      - name: Upload Finished App
+        uses: actions/upload-artifact@v4
+        with:
+          name: Orbitly-App-Package
+          path: build/Orbitly.ipa
