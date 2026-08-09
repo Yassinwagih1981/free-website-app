@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Orbitly",
+    "slug": "free-website-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./favicon.png",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.orbitly.orbitly"
+    },
+    "web": {
+      "favicon": "./favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-webview",
+        {
+          "url": "https://orbitly-app.lovable.app"
+        }
+      ]
+    ]
+  }
+}
