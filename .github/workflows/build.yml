@@ -1,4 +1,4 @@
-name: Free Orbitly iOS Build
+name: Orbitly Framework Fix
 on: [push]
 
 jobs:
@@ -16,18 +16,20 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Generate Native iOS Project
-        run: npx expo prebuild --platform ios
+      - name: Prebuild Native iOS
+        run: npx expo prebuild --platform ios --clean
 
-      - name: Compile Code to IPA
+      - name: Extract Dynamic IPA Container
         run: |
           mkdir -p build/Payload
-          xcodebuild -workspace ios/orbitlyapp.xcworkspace -scheme orbitlyapp -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO clean build
-          mv ios/build/Build/Products/Release-iphoneos/orbitlyapp.app build/Payload/
+          cd ios
+          xcodebuild -workspace *.xcworkspace -scheme * -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGN_ENTITLEMENTS="" GCC_WARN_INHIBIT_ALL_WARNINGS=YES
+          cd ..
+          find ios/build -name "*.app" -exec cp -R {} build/Payload/ \;
           cd build
-          zip -r Orbitly.ipa Payload
+          zip -qy -r Orbitly.ipa Payload
 
-      - name: Upload Finished App
+      - name: Upload Repackaged App
         uses: actions/upload-artifact@v4
         with:
           name: Orbitly-App-Package
