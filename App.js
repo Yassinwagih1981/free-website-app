@@ -5,14 +5,18 @@ import { WebView } from 'react-native-webview';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
-      <View style={styles.inputContainer}>
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      <View style={styles.webContainer}>
         <WebView 
-          source={{ uri: 'https://yourwebsite.com' }} 
+          source={{ uri: 'https://orbitly-app.lovable.app' }} 
           style={styles.webview}
           domStorageEnabled={true}
           javaScriptEnabled={true}
           allowsBackForwardNavigationGestures={true}
+          originWhitelist={['*']}
+          mixedContentMode="always"
+          sharedCookiesEnabled={true}
+          thirdPartyCookiesEnabled={true}
         />
       </View>
     </SafeAreaView>
@@ -24,7 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  inputContainer: {
+  webContainer: {
     flex: 1,
   },
   webview: {
