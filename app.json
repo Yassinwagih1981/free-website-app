@@ -4,22 +4,13 @@
     "slug": "orbitly-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./favicon.png",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.orbitly.orbitly"
+      "bundleIdentifier": "com.orbitly.app"
     },
-    "web": {
-      "favicon": "./favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-webview",
-        {
-          "url": "https://orbitly-app.lovable.app"
-        }
-      ]
-    ]
+    "updates": {
+      "url": "https://expo.dev"
+    }
   }
 }
